@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:descendantFocusability="blocksDescendants">
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:visibility="@{viewModel.day.totalSteps >= viewModel.targetSteps ? View.VISIBLE : View.GONE}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:contentDescription="@string/cup"
+                    android:src="@drawable/cup" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="8dp"
+                    android:text="@string/you_ve_reached_your_target"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@{viewModel.day.toString()}"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:targetApi="p"
+                tools:text="Tue, 17 September 2019" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:paddingBottom="4dp"
+                android:text="@string/workouts_label"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@color/color_black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/stats_layout2" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/date">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="@+id/stats_progressbar"
+                    app:layout_constraintEnd_toEndOf="@+id/stats_progressbar"
+                    app:layout_constraintStart_toStartOf="@+id/stats_progressbar"
+                    app:layout_constraintTop_toTopOf="@+id/stats_progressbar">
+
+                    <TextView
+                        android:id="@+id/number_of_calories"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{String.valueOf(viewModel.day.totalSteps)}"
+                        android:textAlignment="center"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                        android:textColor="@color/color_black"
+                        android:textStyle="bold"
+                        tools:text="0" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{`/ ` + viewModel.targetSteps}"
+                        android:textAlignment="center"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        tools:text="/ 6000" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/steps_caption"
+                        android:textAlignment="center"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+                </LinearLayout>
+
+                <ProgressBar
+                    android:id="@+id/background_progressbar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="160dp"
+                    android:layout_height="160dp"
+                    android:indeterminate="false"
+                    android:max="100"
+                    android:progress="100"
+                    android:progressDrawable="@drawable/stats_full"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:progress="100" />
+
+                <ProgressBar
+                    android:id="@+id/stats_progressbar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="160dp"
+                    android:layout_height="160dp"
+                    android:indeterminate="false"
+                    android:max="100"
+                    android:progress="@{viewModel.progress}"
+                    android:progressDrawable="@drawable/stats_progress"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:progress="25" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/stats_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+                <ImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/cup"
+                    android:src="@drawable/cup"
+                    android:visibility="@{viewModel.timeTargetReached ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintBottom_toTopOf="@+id/textView4"
+                    app:layout_constraintEnd_toEndOf="@+id/active_time_title"
+                    app:layout_constraintStart_toStartOf="@+id/active_time_title"
+                    app:layout_constraintTop_toBottomOf="@+id/active_time_title"
+                    tools:visibility="gone" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="@+id/total_distance_title"
+                    app:layout_constraintStart_toStartOf="@+id/total_distance_title"
+                    app:layout_constraintTop_toBottomOf="@+id/total_distance_title">
+
+                    <TextView
+                        android:id="@+id/textView6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="4dp"
+                        android:text="@{String.format(`%.2f`, viewModel.distance)}"
+                        android:textColor="@color/color_black"
+                        android:textStyle="bold"
+                        tools:text="14.4" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/km_caption"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="@+id/calories_burnt_title"
+                    app:layout_constraintStart_toStartOf="@+id/calories_burnt_title"
+                    app:layout_constraintTop_toBottomOf="@+id/calories_burnt_title">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="4dp"
+                        android:text="@{String.valueOf(viewModel.day.caloriesBurnt)}"
+                        android:textColor="@color/color_black"
+                        android:textStyle="bold"
+                        tools:text="1414" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/kcal_caption"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/active_time_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/active_time_title"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/total_distance_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="@string/total_distance_title"
+                    app:layout_constraintBottom_toTopOf="@+id/layout12"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/calories_burnt_title"
+                    app:layout_constraintTop_toTopOf="@+id/calories_burnt_title"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.day.getDurationString(viewModel.day.duration)}"
+                    android:textColor="@color/color_black"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/active_time_title"
+                    app:layout_constraintStart_toStartOf="@+id/active_time_title"
+                    app:layout_constraintTop_toBottomOf="@+id/active_time_title"
+                    tools:text="00:00:00" />
+
+                <TextView
+                    android:id="@+id/calories_burnt_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="@string/calories_burnt_title"
+                    app:layout_constraintBottom_toTopOf="@+id/textView4"
+                    app:layout_constraintStart_toEndOf="@+id/active_time_title"
+                    app:layout_constraintTop_toTopOf="@+id/active_time_title"
+                    app:layout_constraintVertical_bias="0.0" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/stats_layout2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="@+id/stats_layout"
+                app:layout_constraintStart_toStartOf="@+id/stats_layout"
+                app:layout_constraintTop_toBottomOf="@+id/stats_layout">
+
+                <LinearLayout
+                    android:id="@+id/layout13"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="@+id/speed_title"
+                    app:layout_constraintStart_toStartOf="@+id/speed_title"
+                    app:layout_constraintTop_toBottomOf="@+id/speed_title">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="4dp"
+                        android:text="@{String.format(`%.2f`, viewModel.day.getAverageSpeed(viewModel.day.duration, viewModel.distance))}"
+                        android:textColor="@color/color_black"
+                        android:textStyle="bold"
+                        tools:text="1.65" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/speed_caption"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="@+id/title1"
+                    app:layout_constraintStart_toStartOf="@+id/title1"
+                    app:layout_constraintTop_toBottomOf="@+id/title1">
+
+                    <TextView
+                        android:id="@+id/textView50"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="@{viewModel.day.getAveragePace(viewModel.day.duration, viewModel.distance)}"
+                        android:textColor="@color/color_black"
+                        android:textStyle="bold"
+                        tools:text="00:00:11" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/pace_caption"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/title1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="@string/average_pace_title"
+                    app:layout_constraintStart_toEndOf="@+id/speed_title"
+                    app:layout_constraintTop_toTopOf="@+id/speed_title"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <TextView
+                    android:id="@+id/speed_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/average_speed_title"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="@{viewModel.workouts.size() > 0 ? View.VISIBLE : View.GONE}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+            <ImageView
+                android:id="@+id/icon"
+                android:visibility="@{viewModel.workouts.size() > 0 ? View.GONE : View.VISIBLE}"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/ic_directions_walk_black_24dp"
+                app:layout_constraintBottom_toTopOf="@+id/textView8"
+                app:layout_constraintEnd_toEndOf="@+id/textView8"
+                app:layout_constraintStart_toStartOf="@+id/textView8"
+                app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+            <TextView
+                android:id="@+id/textView8"
+                android:visibility="@{viewModel.workouts.size() > 0 ? View.GONE : View.VISIBLE}"
+                android:layout_width="wrap_content"
+                android:layout_height="19dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:text="@string/no_workouts_found_be_more_active"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/icon" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.tarasbarabash.acesteps.viewModels.DayVM" />
+    </data>
+</layout>

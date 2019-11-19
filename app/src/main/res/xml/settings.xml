@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <EditTextPreference
+        android:title="@string/title_step_pref"
+        android:key="TARGET_STEPS"
+        android:summary="@string/summary_step_pref"
+        android:defaultValue="6000"
+        android:icon="@drawable/ic_directions_walk_black_24dp"
+        android:dialogLayout="@layout/preference_edit_text"
+        android:dialogTitle="@string/steps_title_pref"/>
+
+    <EditTextPreference
+        android:title="@string/title_time_pref"
+        android:key="TARGET_ACTIVITY_MINS"
+        android:summary="@string/summary_time_pref"
+        android:defaultValue="60"
+        android:icon="@drawable/ic_access_time_black_24dp"
+        android:dialogLayout="@layout/preference_edit_text"
+        android:dialogTitle="@string/time_title_pref"/>
+
+    <EditTextPreference
+        android:title="@string/height_pref"
+        android:key="HEIGHT"
+        android:summary="@string/height_summary_pref"
+        android:defaultValue="178"
+        android:icon="@drawable/ic_height"
+        android:dialogLayout="@layout/preference_edit_text"
+        android:dialogTitle="@string/height_dtitle_pref"/>
+</PreferenceScreen>
